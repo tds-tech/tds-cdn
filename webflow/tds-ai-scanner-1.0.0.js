@@ -6,9 +6,10 @@
 (function () {
   'use strict';
 
-  var N8N_TEASER = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-teaser';
-  var N8N_POLL   = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-poll';
-  var N8N_GATE   = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-gate';
+  var N8N_TEASER  = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-teaser';
+  var N8N_POLL    = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-poll';
+  var N8N_GATE    = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-gate';
+  var N8N_RESULT  = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-public-result';
 
   var POLL_INTERVAL = 3000;
   var POLL_MAX = 40; // 2 min timeout
@@ -377,7 +378,40 @@
     style.textContent = CSS;
     document.head.appendChild(style);
 
-    renderStage1(root);
+    // Shareable result URL: ?r=SLUG — skip the form, fetch and render directly
+    var params = new URLSearchParams(window.location.search);
+    var resultSlug = params.get('r');
+    if (resultSlug) {
+      renderPublicResult(root, resultSlug);
+    } else {
+      renderStage1(root);
+    }
+  }
+
+  function renderPublicResult(root, slug) {
+    root.innerHTML = [
+      '<div class="tds-card">',
+      '<div class="tds-status-bar">Loading report…</div>',
+      '</div>'
+    ].join('');
+
+    post(N8N_RESULT, { slug: slug }, function (err, data) {
+      if (err || data.detail) {
+        root.innerHTML = '<div class="tds-card"><p style="color:#dc2626">Report not found or expired.</p><p><a href="/ai-visibility-checker">Run a new scan →</a></p></div>';
+        return;
+      }
+      // Map public result shape → stage3 render expects same structure
+      var reportData = {
+        grade: data.grade,
+        score: data.score,
+        practice_name: data.practice_name,
+        domain: data.domain,
+        narrative: null,
+        diagnostics: { checks: data.checks || [] },
+        ghl_contact_id: null
+      };
+      renderStage3Report(root, reportData);
+    });
   }
 
   if (document.readyState === 'loading') {

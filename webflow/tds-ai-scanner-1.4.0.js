@@ -1,8 +1,14 @@
 /**
- * TDS AI Visibility Scanner — Webflow Embed v1.4.0
+ * TDS AI Visibility Scanner — Webflow Embed v1.4.1
  * Self-contained, brand-coherent (light / blue-white) embeddable component.
  * Drop <div id="tds-ai-scanner"></div> anywhere; auto-mounts to body if absent.
  *
+ * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
+ *   value pills with inline SVG icons (were emoji); trust bar anchored inside
+ *   the card with a hairline; radial score dial wrapping the grade badge
+ *   (replaces the flat score bar); deeper card shadow + inner highlight;
+ *   staggered checklist reveal; strong ease-out curves; killed two
+ *   `transition:all`. No layout/flow or copy changes.
  * v1.4.0 — Senior UI/UX pass:
  *   • LIGHT theme, on-brand with thedigitalsmile.co (no dark hijack of <body>).
  *   • Self-contained component: max-width centered column, lives in page flow
@@ -74,18 +80,20 @@
   var CSS = [
     /* Self-contained component: centered column in normal page flow.
        No <body> override, no full-viewport takeover, no fixed page orbs. */
-    '#tds-ai-scanner{max-width:640px;margin:0 auto;padding:8px 16px 24px;position:relative;}',
+    '#tds-ai-scanner{max-width:640px;margin:0 auto;padding:8px 16px 24px;position:relative;font-family:inherit;}',
     '#tds-ai-scanner *,#tds-ai-scanner *::before,#tds-ai-scanner *::after{',
     '  box-sizing:border-box;',
-    '  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;',
+    /* Inherit the host Webflow page font so the widget reads as native brand
+       (system stack as the ultimate fallback if the host sets none). */
+    '  font-family:inherit;',
     '}',
 
     /* Card */
     '.tds-card{',
     '  background:#fff;border-radius:20px;',
-    '  box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 32px -12px rgba(37,99,235,.14),0 0 0 1px rgba(15,23,42,.05);',
+    '  box-shadow:0 1px 2px rgba(15,23,42,.04),0 18px 44px -18px rgba(37,99,235,.22),0 0 0 1px rgba(15,23,42,.05),inset 0 1px 0 rgba(255,255,255,.7);',
     '  padding:28px 22px;margin-bottom:16px;',
-    '  animation:tds-fade-up .35s ease both;',
+    '  animation:tds-fade-up .4s cubic-bezier(0.23,1,0.32,1) both;',
     '  position:relative;width:100%;overflow:hidden;',
     '}',
     '@media(min-width:640px){.tds-card{padding:40px;}}',
@@ -96,20 +104,22 @@
     '  width:52px;height:52px;border-radius:14px;',
     '  background:linear-gradient(135deg,#2563eb,#0d9488);',
     '  display:flex;align-items:center;justify-content:center;',
-    '  font-size:26px;margin:0 0 18px;',
+    '  color:#fff;margin:0 0 18px;',
     '}',
-    '.tds-headline{font-size:21px;font-weight:800;color:#0f172a;margin:0 0 10px;line-height:1.25;letter-spacing:-.01em;}',
-    '@media(min-width:640px){.tds-headline{font-size:27px;}}',
+    '.tds-hero-icon svg,.tds-scan-pulse svg{display:block;}',
+    '.tds-headline{font-size:22px;font-weight:800;color:#0f172a;margin:0 0 10px;line-height:1.2;letter-spacing:-.022em;text-wrap:balance;}',
+    '@media(min-width:640px){.tds-headline{font-size:29px;}}',
     '.tds-sub{font-size:15px;color:#64748b;margin:0 0 22px;line-height:1.65;}',
 
     /* Pills */
     '.tds-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;}',
     '.tds-pill{',
     '  display:inline-flex;align-items:center;gap:5px;',
-    '  background:#f1f5f9;color:#475569;',
-    '  font-size:12px;font-weight:600;padding:4px 10px;border-radius:99px;',
-    '  border:1px solid #e2e8f0;',
+    '  background:#eff6ff;color:#1d4ed8;',
+    '  font-size:12px;font-weight:600;padding:5px 11px;border-radius:99px;',
+    '  border:1px solid #dbeafe;',
     '}',
+    '.tds-pill svg{width:13px;height:13px;flex-shrink:0;opacity:.9;}',
 
     /* Field label */
     '.tds-field-label{display:block;font-size:13px;font-weight:600;color:#334155;margin:0 0 6px;}',
@@ -118,8 +128,9 @@
     '.tds-input-wrap{position:relative;margin-bottom:12px;}',
     '.tds-input-icon{',
     '  position:absolute;left:14px;top:50%;transform:translateY(-50%);',
-    '  color:#94a3b8;font-size:15px;pointer-events:none;line-height:1;',
+    '  color:#94a3b8;pointer-events:none;line-height:0;',
     '}',
+    '.tds-input-icon svg{display:block;width:16px;height:16px;}',
     '.tds-input{',
     '  width:100%;padding:14px 14px 14px 42px;',
     '  border:1.5px solid #e2e8f0;border-radius:12px;',
@@ -156,7 +167,7 @@
     '@keyframes tds-spin{to{transform:rotate(360deg)}}',
 
     /* Trust bar (light) */
-    '.tds-trust-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px;}',
+    '.tds-trust-bar{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid #f1f5f9;}',
     '.tds-trust-label{font-size:11px;color:#94a3b8;font-weight:600;letter-spacing:.05em;text-transform:uppercase;width:100%;text-align:center;margin-bottom:8px;}',
     '.tds-trust-badge{',
     '  display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#475569;font-weight:600;',
@@ -170,7 +181,7 @@
     '  width:68px;height:68px;border-radius:50%;',
     '  background:linear-gradient(135deg,#eff6ff,#dbeafe);',
     '  display:flex;align-items:center;justify-content:center;',
-    '  margin:0 auto 14px;font-size:30px;position:relative;',
+    '  margin:0 auto 14px;color:#2563eb;position:relative;',
     '}',
     '.tds-scan-pulse::after{',
     '  content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid #2563eb;opacity:.35;',
@@ -183,7 +194,7 @@
     '.tds-step{display:flex;align-items:center;gap:11px;padding:7px 0;font-size:13px;color:#cbd5e1;transition:color .3s;}',
     '.tds-step-dot{',
     '  width:20px;height:20px;border-radius:50%;border:2px solid #e2e8f0;flex-shrink:0;',
-    '  display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .3s;',
+    '  display:flex;align-items:center;justify-content:center;font-size:10px;transition:border-color .3s,background .3s,color .3s;',
     '}',
     '.tds-step--active{color:#2563eb;}',
     '.tds-step--active .tds-step-dot{border-color:#2563eb;background:#eff6ff;animation:tds-spin .9s linear infinite;}',
@@ -201,11 +212,11 @@
     '@media(min-width:640px){.tds-grade-hero{margin:-40px -40px 26px;padding:30px 40px;gap:22px;}}',
     '.tds-grade-col{display:flex;flex-direction:column;align-items:center;gap:7px;flex-shrink:0;}',
     '.tds-grade-badge{',
-    '  width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;',
-    '  font-size:30px;font-weight:900;color:#fff;letter-spacing:-1px;',
+    '  width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;',
+    '  font-size:28px;font-weight:900;color:#fff;letter-spacing:-1px;',
     '  box-shadow:0 8px 24px var(--tds-glow,rgba(0,0,0,.2));',
     '}',
-    '@media(min-width:640px){.tds-grade-badge{width:96px;height:96px;font-size:36px;}}',
+    '@media(min-width:640px){.tds-grade-badge{width:88px;height:88px;font-size:34px;}}',
     '.tds-grade-sm{font-size:19px;letter-spacing:0;}',
     '@media(min-width:640px){.tds-grade-sm{font-size:23px;}}',
     '.tds-grade-band{',
@@ -217,8 +228,12 @@
     '@media(min-width:640px){.tds-practice{font-size:19px;}}',
     '.tds-score-num{font-size:26px;font-weight:800;margin:0 0 7px;color:var(--tds-color,#0f172a);line-height:1;}',
     '.tds-score-num small{font-size:14px;font-weight:500;color:#94a3b8;}',
-    '.tds-score-bar{height:6px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin-bottom:8px;}',
-    '.tds-score-fill{height:100%;border-radius:99px;width:0;transition:width 1s ease;}',
+    /* Radial score dial — wraps the grade badge (replaces the flat score bar) */
+    '.tds-grade-dial{position:relative;width:92px;height:92px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:2px;}',
+    '@media(min-width:640px){.tds-grade-dial{width:112px;height:112px;}}',
+    '.tds-dial-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);}',
+    '.tds-dial-track{fill:none;stroke:#e8eef6;stroke-width:6;}',
+    '.tds-dial-fill{fill:none;stroke-width:6;stroke-linecap:round;stroke-dasharray:289.03;stroke-dashoffset:289.03;transition:stroke-dashoffset 1.1s cubic-bezier(0.23,1,0.32,1);}',
     '.tds-pf-row{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;font-size:12px;font-weight:700;}',
     '.tds-pf-row span{display:inline-flex;align-items:center;gap:4px;}',
     '.tds-pf-ic{width:14px;height:14px;flex-shrink:0;}',
@@ -247,7 +262,8 @@
 
     /* Check items */
     '.tds-checks{list-style:none;padding:0;margin:0;}',
-    '.tds-check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f1f5f9;}',
+    '.tds-check-item{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid #f1f5f9;animation:tds-fade-up .4s cubic-bezier(0.23,1,0.32,1) both;}',
+    '.tds-check-item:nth-child(1){animation-delay:.03s}.tds-check-item:nth-child(2){animation-delay:.07s}.tds-check-item:nth-child(3){animation-delay:.11s}.tds-check-item:nth-child(4){animation-delay:.15s}.tds-check-item:nth-child(5){animation-delay:.19s}.tds-check-item:nth-child(6){animation-delay:.23s}.tds-check-item:nth-child(7){animation-delay:.27s}.tds-check-item:nth-child(n+8){animation-delay:.3s}',
     '.tds-check-item:last-child{border-bottom:none;}',
     '.tds-ci{flex-shrink:0;width:20px;height:20px;margin-top:1px;}',
     '.tds-cl{font-size:13px;font-weight:600;color:#0f172a;margin:0 0 2px;}',
@@ -277,7 +293,7 @@
     '.tds-share-btn{',
     '  display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:11px 16px;',
     '  background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;',
-    '  font-size:13px;font-weight:700;color:#475569;cursor:pointer;transition:all .15s;margin-bottom:22px;min-height:44px;',
+    '  font-size:13px;font-weight:700;color:#475569;cursor:pointer;transition:background .15s,border-color .15s,color .15s;margin-bottom:22px;min-height:44px;',
     '}',
     '.tds-share-btn:hover{background:#f1f5f9;border-color:#cbd5e1;color:#0f172a;}',
     '.tds-share-btn.copied{background:#f0fdfa;border-color:#a7f3d0;color:#0d9488;}',
@@ -323,7 +339,34 @@
   function svgInfo() {
     return '<svg class="tds-ci" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#e0e7ff"/><path d="M10 9v5M10 7v1" stroke="#4338ca" stroke-width="2" stroke-linecap="round"/></svg>';
   }
-  function svgShare() { return '🔗'; }
+  // Brand mark — magnifier + spark = "AI visibility scan" (inherits currentColor)
+  function svgBrand() {
+    return '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" aria-hidden="true">' +
+      '<circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M15.8 15.8 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M10.5 6.7l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z" fill="currentColor"/>' +
+      '</svg>';
+  }
+  function svgLock() {
+    return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true" style="vertical-align:-3px;margin-right:7px">' +
+      '<rect x="5" y="10.5" width="14" height="8.5" rx="2" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="currentColor" stroke-width="2"/>' +
+      '</svg>';
+  }
+  function svgLink() {
+    return '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true" style="vertical-align:-2px;margin-right:6px">' +
+      '<path d="M9 15l6-6M10.5 6.5l1-1a4 4 0 0 1 6 6l-2 2M13.5 17.5l-1 1a4 4 0 0 1-6-6l2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+  function svgGlobe() {
+    return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>' +
+      '<path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18" stroke="currentColor" stroke-width="1.8"/></svg>';
+  }
+  function svgMail() {
+    return '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>' +
+      '<path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  function svgShare() { return svgLink(); }
 
   // Small (14px) crisp marks for the pass / to-fix / unverified tally row
   function pfMark(kind) {
@@ -409,7 +452,7 @@
     return [
       '<div class="tds-cat-group">',
       '<div class="tds-cat-header">',
-      '<p class="tds-cat-title">' + (allBlurred ? '<span class="tds-lock">🔒</span>' : '') + esc(label) + '</p>',
+      '<p class="tds-cat-title">' + (allBlurred ? svgLock() : '') + esc(label) + '</p>',
       '<span class="tds-cat-score ' + scoreClass + '">' + scoreLabel + '</span>',
       '</div>',
       '<ul class="tds-checks">' + items + '</ul>',
@@ -461,30 +504,30 @@
   function renderStage1(root) {
     root.innerHTML = [
       '<div class="tds-card">',
-      '<div class="tds-hero-icon" aria-hidden="true">🤖</div>',
+      '<div class="tds-hero-icon" aria-hidden="true">' + svgBrand() + '</div>',
       '<h2 class="tds-headline">Is your dental practice invisible to AI?</h2>',
       '<p class="tds-sub">ChatGPT and Gemini are the new search engines for patients.',
       ' Run a free scan to see if your practice shows up — and exactly what to fix if it doesn’t.</p>',
       '<div class="tds-pills">',
-      '<span class="tds-pill">✅ Free</span>',
-      '<span class="tds-pill">📊 16 checks</span>',
-      '<span class="tds-pill">⏱ Results in ~90s</span>',
+      '<span class="tds-pill"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Free</span>',
+      '<span class="tds-pill"><svg viewBox="0 0 16 16" fill="none"><path d="M5 4h8M5 8h8M5 12h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>16 checks</span>',
+      '<span class="tds-pill"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.6"/><path d="M8 4.5V8l2.5 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Results in ~90s</span>',
       '</div>',
       '<label class="tds-field-label" for="tds-d">Your practice website</label>',
       '<div class="tds-input-wrap">',
-      '<span class="tds-input-icon" aria-hidden="true">🌐</span>',
+      '<span class="tds-input-icon" aria-hidden="true">' + svgGlobe() + '</span>',
       '<input id="tds-d" class="tds-input" type="text" inputmode="url" placeholder="yourpractice.com"',
       ' autocomplete="off" autocorrect="off" spellcheck="false" aria-describedby="tds-e1">',
       '</div>',
       '<div id="tds-e1" class="tds-error" role="alert"></div>',
       '<button id="tds-sb" class="tds-btn" type="button">Check my AI visibility →</button>',
-      '</div>',
       '<div class="tds-trust-bar">',
       '<span class="tds-trust-label">Checks visibility across</span>',
-      '<span class="tds-trust-badge">🤖 ChatGPT</span>',
-      '<span class="tds-trust-badge">✨ Gemini</span>',
-      '<span class="tds-trust-badge">🔍 Perplexity</span>',
-      '<span class="tds-trust-badge">🤖 Copilot</span>',
+      '<span class="tds-trust-badge">ChatGPT</span>',
+      '<span class="tds-trust-badge">Gemini</span>',
+      '<span class="tds-trust-badge">Perplexity</span>',
+      '<span class="tds-trust-badge">Copilot</span>',
+      '</div>',
       '</div>'
     ].join('');
 
@@ -534,7 +577,7 @@
     root.innerHTML = [
       '<div class="tds-card">',
       '<div class="tds-scan-hd">',
-      '<div class="tds-scan-pulse" aria-hidden="true">🤖</div>',
+      '<div class="tds-scan-pulse" aria-hidden="true">' + svgBrand() + '</div>',
       '<h2 class="tds-scan-domain"><span class="tds-sr-only">Scanning </span>' + esc(domain) + '</h2>',
       '<p class="tds-scan-tag">Checking 16 AI visibility signals…</p>',
       '</div>',
@@ -574,7 +617,7 @@
 
       if (attempt > POLL_MAX) {
         root.innerHTML = '<div class="tds-card"><p style="color:#dc2626;font-size:14px;text-align:center;margin:0 0 6px">' +
-          '⚠️ Scan is taking longer than expected.</p><p style="text-align:center;margin:0">' +
+          'Scan is taking longer than expected.</p><p style="text-align:center;margin:0">' +
           '<a class="tds-retry" href="' + window.location.pathname + '">Try again →</a></p></div>';
         focusStage(root);
         return;
@@ -615,15 +658,20 @@
     return [
       '<div class="tds-grade-hero">',
       '<div class="tds-grade-col">',
+      '<div class="tds-grade-dial">',
+      '<svg class="tds-dial-svg" viewBox="0 0 100 100" aria-hidden="true">',
+      '<circle class="tds-dial-track" cx="50" cy="50" r="46"></circle>',
+      '<circle class="tds-dial-fill" cx="50" cy="50" r="46" data-w="' + score + '" style="stroke:' + info.color + '"></circle>',
+      '</svg>',
       '<div class="tds-grade-badge' + (info.label.length > 2 ? ' tds-grade-sm' : '') + '"',
       ' style="background:' + info.color + ';box-shadow:0 8px 24px ' + info.glow + '" aria-hidden="true">',
       esc(info.label) + '</div>',
+      '</div>',
       '<span class="tds-grade-band" style="background:' + info.color + '"><span class="tds-sr-only">AI visibility grade: </span>' + esc(info.band) + '</span>',
       '</div>',
       '<div class="tds-grade-info">',
       '<h2 class="tds-practice">' + esc(name) + '</h2>',
       '<p class="tds-score-num" style="color:' + info.color + '">' + Math.round(score) + '<small> / 100</small></p>',
-      '<div class="tds-score-bar"><div class="tds-score-fill" data-w="' + score + '" style="background:' + info.color + '"></div></div>',
       pfRow,
       '</div></div>'
     ].join('');
@@ -631,11 +679,14 @@
 
   // Animate score bars to their target width after paint
   function animateBars(root) {
-    var fills = root.querySelectorAll('.tds-score-fill');
+    var C = 289.03; // circumference of the r=46 score dial
+    var dials = root.querySelectorAll('.tds-dial-fill');
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
-        for (var i = 0; i < fills.length; i++) {
-          fills[i].style.width = (fills[i].getAttribute('data-w') || 0) + '%';
+        for (var i = 0; i < dials.length; i++) {
+          var w = parseFloat(dials[i].getAttribute('data-w')) || 0;
+          if (w < 0) w = 0; if (w > 100) w = 100;
+          dials[i].style.strokeDashoffset = (C * (1 - w / 100)).toFixed(2);
         }
       });
     });
@@ -683,7 +734,7 @@
       ? ('<p class="tds-teaser-hint">Showing <strong>' + shownCount + '</strong> of <strong>' + checks.length +
          '</strong> checks. Unlock the full report below — free.</p>')
       : '';
-    var gateTitle = checks.length ? ('🔓 Unlock your full ' + checks.length + '-point report') : '🔓 Unlock your full report';
+    var gateTitle = checks.length ? ('Unlock your full ' + checks.length + '-point report') : 'Unlock your full report';
     var gateSub = lockedCount > 0
       ? ('See all ' + lockedCount + ' remaining checks, get an AI-written action plan, and a shareable results link.')
       : 'Get your AI-written action plan and a shareable results link.';
@@ -696,11 +747,11 @@
       checksHtml,
 
       '<div class="tds-gate-box">',
-      '<h3>' + gateTitle + '</h3>',
+      '<h3>' + svgLock() + gateTitle + '</h3>',
       '<p>' + gateSub + '</p>',
       '<label class="tds-field-label" for="tds-em">Work email <span aria-hidden="true" style="color:#dc2626">*</span></label>',
       '<div class="tds-input-wrap">',
-      '<span class="tds-input-icon" aria-hidden="true">✉️</span>',
+      '<span class="tds-input-icon" aria-hidden="true">' + svgMail() + '</span>',
       '<input id="tds-em" class="tds-input" type="email" autocomplete="email" inputmode="email"',
       ' placeholder="doctor@yourpractice.com" aria-describedby="tds-e2" aria-required="true" required>',
       '</div>',
@@ -822,7 +873,7 @@
     root.innerHTML = [
       '<div class="tds-card">',
       '<div style="text-align:center;padding:32px 0">',
-      '<div class="tds-scan-pulse" style="margin:0 auto 14px" aria-hidden="true">🤖</div>',
+      '<div class="tds-scan-pulse" style="margin:0 auto 14px" aria-hidden="true">' + svgBrand() + '</div>',
       '<p style="color:#64748b;font-size:14px">Loading report…</p>',
       '</div></div>'
     ].join('');

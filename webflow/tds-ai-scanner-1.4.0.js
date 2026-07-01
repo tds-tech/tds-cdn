@@ -1,8 +1,17 @@
 /**
- * TDS AI Visibility Scanner — Webflow Embed v1.4.1
+ * TDS AI Visibility Scanner — Webflow Embed v1.5.1
  * Self-contained, brand-coherent (light / blue-white) embeddable component.
  * Drop <div id="tds-ai-scanner"></div> anywhere; auto-mounts to body if absent.
  *
+ * v1.5.1 — BOOK A CALL HERE now points to the ads-style pre-booking qualification
+ *   form (thedigitalsmile-seo.com/pre-booking) per Gabriel — qualified dentists route
+ *   to the booking page. (Superseded the interim /book-a-call target from 1.5.0.)
+ * v1.5.0 — Report CTA rewritten per Gabriel (CEO): "Feeling overwhelmed?" →
+ *   BOOK A CALL HERE, instead of "See how it works". Dentist-only report header.
+ * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
+ *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
+ *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
  *   value pills with inline SVG icons (were emoji); trust bar anchored inside
  *   the card with a hairline; radial score dial wrapping the grade badge
@@ -38,7 +47,12 @@
 
   var POLL_INTERVAL = 3000;
   var POLL_MAX = 40;
-  var AI_SEO_URL = 'https://thedigitalsmile.co/ai-seo';
+  // Report CTA target. Points to the AI Visibility Checker landing (the AI-SEO tool
+  // page), so shared/emailed reports route back to the tool's "how it works" + scan.
+  var AI_SEO_URL = 'https://www.thedigitalsmile.com/ai-visibility-checker';
+  // Primary report CTA (Gabriel): the ads-style pre-booking qualification form
+  // (9-step: chairs, etc.) that routes qualified dentists to the booking page.
+  var BOOK_A_CALL_URL = 'https://thedigitalsmile-seo.com/pre-booking';
 
   // Full grade map — engine text grades + letter grades
   var GRADES = {
@@ -826,9 +840,9 @@
       '<hr class="tds-divider">',
 
       '<div class="tds-cta-block">',
-      '<h3>Ready to rank in AI search?</h3>',
-      '<p>Our AI SEO service gets dental practices appearing in ChatGPT, Gemini &amp; Perplexity — where high-intent patients are searching now.</p>',
-      '<a class="tds-cta-btn" href="' + AI_SEO_URL + '" target="_blank" rel="noopener">See how it works →</a>',
+      '<h3>Feeling overwhelmed by all this?</h3>',
+      '<p>We got you. Book a call with our team — we’ll go over your report with you and put it in plain, simple English.</p>',
+      '<a class="tds-cta-btn" href="' + BOOK_A_CALL_URL + '" target="_blank" rel="noopener">BOOK A CALL HERE</a>',
       '</div>',
 
       '</div>'

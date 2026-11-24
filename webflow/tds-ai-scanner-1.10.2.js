@@ -15,7 +15,7 @@
  *   numbers/names), and categories whose checks are all scoreable:false
  *   (off-site checks in calibration) render as Info instead of "0/0".
  *
- * v1.8.0 — "Heads up: what we found" alert card (Ramiro + Gabriel, 2026-07-14):
+ * v1.8.0 — "Heads up: what we found" alert card:
  *   • New .tds-gaps card in the FULL report (post-gate + ?r= page), between
  *     competitors and the CTA: top-5 failed checks as fixed patient-language
  *     alert lines (diagnostics.gaps, computed engine-side, $0, no LLM).
@@ -30,7 +30,7 @@
  *   name drew a blue outline box on ?r= page loads). Standard skip-target
  *   pattern: non-interactive [tabindex="-1"] targets show no outline; real
  *   keyboard focus on buttons/inputs keeps its ring.
- * v1.7.0 — Dentist-first report (Gabriel rounds 5+6, 2026-07-09/14, ClickUp 86e1j4d5u):
+ * v1.7.0 — Dentist-first report:
  *   • Title FIRST: grade card renders before the written summary in both the
  *     teaser and the full report ("why is this text above the title?" — the
  *     grade hero's full-bleed negative margins overlapped whatever sat above it).
@@ -43,12 +43,12 @@
  *     for cached rows.
  *   • Competitors block: crisper card edge + breathing room below (Jul 9 ask).
  *   • CTA (book a call) moved above the technical block: read → act.
- * v1.6.1 — Alignment fix (Ramiro, ClickUp 86e1j4d5u): the landing hero sets
+ * v1.6.1 — Alignment fix: the landing hero sets
  *   text-align:center and the widget inherited it — check labels, narrative
  *   paragraphs, competitor rows and the section label rendered centered over
  *   their own text block (looked misaligned). .tds-card now pins text-align:left;
  *   center-by-design blocks (gate box, CTA, scan header) are unaffected.
- * v1.6.0 — Gabriel feedback round 4 (2026-07-06, ClickUp 86e1j4d5u):
+ * v1.6.0 — Feedback round 4:
  *   • Summary-FIRST: the plain-English narrative (now generated engine-side at
  *     scan time) renders as the first, biggest thing on the initial report,
  *     BEFORE the email gate. Paragraph-split, larger type.
@@ -63,14 +63,14 @@
  *   engine persists it (diagnostics.narrative) and /public/result returns it.
  *   Was hardcoded null, so the emailed "View your full report" link lost the summary.
  * v1.5.2 — Gate: "You're getting access to one of our most exclusive tools — free"
- *   eyebrow above the unlock box (Gabriel's copy).
+ *   eyebrow above the unlock box.
  * v1.5.1 — BOOK A CALL HERE now points to the ads-style pre-booking qualification
- *   form (thedigitalsmile-seo.com/pre-booking) per Gabriel — qualified dentists route
+ *   form (thedigitalsmile-seo.com/pre-booking) — qualified dentists route
  *   to the booking page. (Superseded the interim /book-a-call target from 1.5.0.)
- * v1.5.0 — Report CTA rewritten per Gabriel (CEO): "Feeling overwhelmed?" →
+ * v1.5.0 — Report CTA rewritten: "Feeling overwhelmed?" →
  *   BOOK A CALL HERE, instead of "See how it works". Dentist-only report header.
  * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
- *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ *   landing (/ai-visibility-checker) — the canonical AI-SEO tool page.
  * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
  *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
@@ -111,7 +111,7 @@
   // Report CTA target. Points to the AI Visibility Checker landing (the AI-SEO tool
   // page), so shared/emailed reports route back to the tool's "how it works" + scan.
   var AI_SEO_URL = 'https://www.thedigitalsmile.com/ai-visibility-checker';
-  // Primary report CTA (Gabriel 2026-07-06): straight to the booking page, no
+  // Primary report CTA: straight to the booking page, no
   // qualification form first. UTMs identify scanner-sourced bookings.
   var BOOK_A_CALL_URL = 'https://thedigitalsmile-seo.com/booking?utm_source=ai-scanner&utm_medium=report&utm_campaign=aivc-report';
 
@@ -333,7 +333,7 @@
     '@media(min-width:640px){.tds-narrative--lead{font-size:17px;}}',
 
     /* Competitors: who AI recommends instead (familiar names make it real).
-       Gabriel Jul 9: needs a real card edge + breathing room below. */
+       Needs a real card edge + breathing room below. */
     '.tds-competitors{background:#fff7ed;border:1.5px solid #fdba74;border-radius:12px;padding:16px 20px;margin:0 0 26px;box-shadow:0 1px 3px rgba(154,52,18,.06);}',
     '.tds-comp-title{font-size:12px;font-weight:800;color:#9a3412;text-transform:uppercase;letter-spacing:.06em;margin:0 0 6px;}',
     '.tds-comp-sub{font-size:14px;color:#7c2d12;line-height:1.6;margin:0 0 10px;}',
@@ -503,7 +503,7 @@
   }
 
   // Narrative → paragraphs (engine writes short paragraphs separated by blank
-  // lines — Gabriel: never one massive block).
+  // lines — never one massive block).
   // Honesty line (Mullins incident 2026-07-27): the AI-written summary is
   // disclosed the way ChatGPT discloses its own fallibility. Lives inside
   // renderNarrative so ONE spot covers teaser, full report and shared ?r=.
@@ -916,7 +916,7 @@
     var checks = (teaserData.diagnostics && teaserData.diagnostics.checks) || [];
     var name   = decodeEntities(teaserData.practice_name) || domain;
 
-    // Dentist-first teaser (Gabriel): title/grade card FIRST, then the written
+    // Dentist-first teaser: title/grade card FIRST, then the written
     // summary, then who AI recommends instead, then the unlock. The technical
     // checklist is gone from the teaser entirely — nobody non-technical
     // understood it, and the narrative is the hook.
@@ -1033,7 +1033,7 @@
     var failN = scoreable.filter(function (c) { return c.status === 'fail'; }).length;
     var unverN = scoreable.filter(function (c) { return c.status === 'could_not_verify'; }).length;
 
-    // Dentist-first report (Gabriel): title/grade → written report → who AI
+    // Dentist-first report: title/grade → written report → who AI
     // recommends instead → book a call. The 16-check breakdown is reference
     // material for their web team — collapsed by default, out of the story.
     var techBlock = checks.length ? [

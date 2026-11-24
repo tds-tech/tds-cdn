@@ -4,7 +4,7 @@
  * Drop <div id="tds-ai-scanner"></div> anywhere; auto-mounts to body if absent.
  *
  * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
- *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ *   landing (/ai-visibility-checker) — the canonical AI-SEO tool page.
  * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
  *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue

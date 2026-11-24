@@ -7,14 +7,14 @@
  *   engine persists it (diagnostics.narrative) and /public/result returns it.
  *   Was hardcoded null, so the emailed "View your full report" link lost the summary.
  * v1.5.2 — Gate: "You're getting access to one of our most exclusive tools — free"
- *   eyebrow above the unlock box (Gabriel's copy).
+ *   eyebrow above the unlock box.
  * v1.5.1 — BOOK A CALL HERE now points to the ads-style pre-booking qualification
- *   form (thedigitalsmile-seo.com/pre-booking) per Gabriel — qualified dentists route
+ *   form (thedigitalsmile-seo.com/pre-booking) — qualified dentists route
  *   to the booking page. (Superseded the interim /book-a-call target from 1.5.0.)
- * v1.5.0 — Report CTA rewritten per Gabriel (CEO): "Feeling overwhelmed?" →
+ * v1.5.0 — Report CTA rewritten: "Feeling overwhelmed?" →
  *   BOOK A CALL HERE, instead of "See how it works". Dentist-only report header.
  * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
- *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ *   landing (/ai-visibility-checker) — the canonical AI-SEO tool page.
  * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
  *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
@@ -55,7 +55,7 @@
   // Report CTA target. Points to the AI Visibility Checker landing (the AI-SEO tool
   // page), so shared/emailed reports route back to the tool's "how it works" + scan.
   var AI_SEO_URL = 'https://www.thedigitalsmile.com/ai-visibility-checker';
-  // Primary report CTA (Gabriel): the ads-style pre-booking qualification form
+  // Primary report CTA: the ads-style pre-booking qualification form
   // (9-step: chairs, etc.) that routes qualified dentists to the booking page.
   var BOOK_A_CALL_URL = 'https://thedigitalsmile-seo.com/pre-booking';
 

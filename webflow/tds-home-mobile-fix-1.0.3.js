@@ -65,12 +65,12 @@
   setTimeout(function(){ obs.disconnect(); }, 15000);
 })();
   /* (C) founder copy */
-  /* Founder copy: 3rd person -> 1st person (ClickUp 2264 + about-us "himto" typo).
+  /* Founder copy: 3rd person -> 1st person (about-us "himto" typo).
    The desktop founder block on / and the founder block on /about-us were written in
-   3rd person ("his father… helped him… positioned him(to)"); the voice is Gabriel's,
+   3rd person ("his father… helped him… positioned him(to)"); the voice is the founder's,
    so it must be 1st person — the mobile homepage block already is. Static-page text,
    so it needs a Designer edit or this runtime replace; each phrase below only exists
-   in the broken blocks (the client testimonial "Gabriel and his team" never matches),
+   in the broken blocks (the client testimonial never matches),
    which makes a whole-document text-node pass safe and idempotent. */
 (function(){
   var SWAPS = [

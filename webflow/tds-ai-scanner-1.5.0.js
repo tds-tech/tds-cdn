@@ -3,11 +3,11 @@
  * Self-contained, brand-coherent (light / blue-white) embeddable component.
  * Drop <div id="tds-ai-scanner"></div> anywhere; auto-mounts to body if absent.
  *
- * v1.5.0 — Report CTA rewritten per Gabriel (CEO): "Feeling overwhelmed?" →
+ * v1.5.0 — Report CTA rewritten: "Feeling overwhelmed?" →
  *   BOOK A CALL HERE (→ /book-a-call, the site's qualify→booking funnel), instead
  *   of "See how it works". Dentist-only audience made explicit in the report header.
  * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
- *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ *   landing (/ai-visibility-checker) — the canonical AI-SEO tool page.
  * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
  *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
@@ -48,7 +48,7 @@
   // Report CTA target. Points to the AI Visibility Checker landing (the AI-SEO tool
   // page), so shared/emailed reports route back to the tool's "how it works" + scan.
   var AI_SEO_URL = 'https://www.thedigitalsmile.com/ai-visibility-checker';
-  // Primary report CTA (Gabriel): the site's "Book a Call" funnel — a qualify form
+  // Primary report CTA: the site's "Book a Call" funnel — a qualify form
   // that routes qualified dentists to the booking page. Same destination as the nav CTA.
   var BOOK_A_CALL_URL = 'https://www.thedigitalsmile.com/book-a-call';
 

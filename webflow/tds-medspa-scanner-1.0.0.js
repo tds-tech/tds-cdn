@@ -3,12 +3,12 @@
  * Self-contained, brand-coherent (light / blue-white) embeddable component.
  * Drop <div id="tds-ai-scanner"></div> anywhere; auto-mounts to body if absent.
  *
- * v1.6.1 — Alignment fix (Ramiro, ClickUp 86e1j4d5u): the landing hero sets
+ * v1.6.1 — Alignment fix: the landing hero sets
  *   text-align:center and the widget inherited it — check labels, narrative
  *   paragraphs, competitor rows and the section label rendered centered over
  *   their own text block (looked misaligned). .tds-card now pins text-align:left;
  *   center-by-design blocks (gate box, CTA, scan header) are unaffected.
- * v1.6.0 — Gabriel feedback round 4 (2026-07-06, ClickUp 86e1j4d5u):
+ * v1.6.0 — Feedback round 4:
  *   • Summary-FIRST: the plain-English narrative (now generated engine-side at
  *     scan time) renders as the first, biggest thing on the initial report,
  *     BEFORE the email gate. Paragraph-split, larger type.
@@ -23,14 +23,14 @@
  *   engine persists it (diagnostics.narrative) and /public/result returns it.
  *   Was hardcoded null, so the emailed "View your full report" link lost the summary.
  * v1.5.2 — Gate: "You're getting access to one of our most exclusive tools — free"
- *   eyebrow above the unlock box (Gabriel's copy).
+ *   eyebrow above the unlock box.
  * v1.5.1 — BOOK A CALL HERE now points to the ads-style pre-booking qualification
- *   form (thedigitalsmile-seo.com/pre-booking) per Gabriel — qualified dentists route
+ *   form (thedigitalsmile-seo.com/pre-booking) — qualified dentists route
  *   to the booking page. (Superseded the interim /book-a-call target from 1.5.0.)
- * v1.5.0 — Report CTA rewritten per Gabriel (CEO): "Feeling overwhelmed?" →
+ * v1.5.0 — Report CTA rewritten: "Feeling overwhelmed?" →
  *   BOOK A CALL HERE, instead of "See how it works". Dentist-only report header.
  * v1.4.3 — Report CTA ("See how it works") now points to the AI Visibility Checker
- *   landing (/ai-visibility-checker) per Ramiro — the canonical AI-SEO tool page.
+ *   landing (/ai-visibility-checker) — the canonical AI-SEO tool page.
  * v1.4.2 — Fix dead report CTA: AI_SEO_URL pointed at a non-resolving domain
  *   (thedigitalsmile.co/ai-seo → 000/404).
  * v1.4.1 — Taste polish (light brand kept): inherit host brand font; blue
@@ -71,7 +71,7 @@
   // Report CTA target. Points to the AI Visibility Checker landing (the AI-SEO tool
   // page), so shared/emailed reports route back to the tool's "how it works" + scan.
   var AI_SEO_URL = 'https://www.thedigitalsmile.com/med-spa-ai-visibility-checker';
-  // Primary report CTA (Gabriel 2026-07-06): straight to the booking page, no
+  // Primary report CTA: straight to the booking page, no
   // qualification form first. UTMs identify scanner-sourced bookings.
   var BOOK_A_CALL_URL = 'https://thedigitalsmile-seo.com/booking?utm_source=ai-scanner-medspa&utm_medium=report&utm_campaign=aivc-report';
 
@@ -434,7 +434,7 @@
   }
 
   // Narrative → paragraphs (engine writes short paragraphs separated by blank
-  // lines — Gabriel: never one massive block).
+  // lines — never one massive block).
   function renderNarrative(text, lead) {
     if (!text) return '';
     var paras = String(text).split(/\n{2,}/).map(function (p) {
@@ -827,7 +827,7 @@
       ? ('See all ' + lockedCount + ' remaining checks and get the full report sent to your inbox as a PDF.')
       : 'Get the full report sent to your inbox as a PDF.';
 
-    // Summary-first (Gabriel): the plain-English summary is the FIRST and
+    // Summary-first: the plain-English summary is the FIRST and
     // biggest thing on the initial report, before the email gate. The
     // competitors block follows it, then the score, then the teaser checks.
     var narrative   = (teaserData.diagnostics && teaserData.diagnostics.narrative) || teaserData.narrative || '';

@@ -101,10 +101,10 @@
 (function () {
   'use strict';
 
-  var N8N_TEASER = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-teaser';
-  var N8N_POLL   = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-poll';
-  var N8N_GATE   = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-gate';
-  var N8N_RESULT = 'https://ramsautomation.app.n8n.cloud/webhook/ai-scanner-public-result';
+  var N8N_TEASER = 'https://n8n.srv1487091.hstgr.cloud/webhook/ai-scanner-teaser';
+  var N8N_POLL   = 'https://n8n.srv1487091.hstgr.cloud/webhook/ai-scanner-poll';
+  var N8N_GATE   = 'https://n8n.srv1487091.hstgr.cloud/webhook/ai-scanner-gate';
+  var N8N_RESULT = 'https://n8n.srv1487091.hstgr.cloud/webhook/ai-scanner-public-result';
 
   var POLL_INTERVAL = 3000;
   var POLL_MAX = 40;
